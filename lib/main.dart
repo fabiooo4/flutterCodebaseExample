@@ -165,11 +165,16 @@ class FavoritePage extends StatelessWidget {
 
     return ListView(
       children: [
-        Padding(padding: EdgeInsets.all(20), child: Text('You have ${appState.favorites.length} favorites')),
+        Padding(
+            padding: EdgeInsets.all(20),
+            child: Text('You have ${appState.favorites.length} favorites')),
         for (var pair in appState.favorites)
           Card(
             child: ListTile(
-              leading: Icon(Icons.favorite, color: Theme.of(context).colorScheme.error,),
+              leading: Icon(
+                Icons.favorite,
+                color: Theme.of(context).colorScheme.error,
+              ),
               title: Text(pair.asLowerCase),
               trailing: IconButton(
                 icon: Icon(Icons.delete),
@@ -197,7 +202,6 @@ class RandomTextCard extends StatelessWidget {
     final theme = Theme.of(context);
     final style = theme.textTheme.displayMedium!.copyWith(
       color: theme.colorScheme.onPrimary,
-      fontWeight: FontWeight.bold,
     );
 
     return Card(
@@ -205,10 +209,26 @@ class RandomTextCard extends StatelessWidget {
       color: theme.colorScheme.primary,
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(
-          pair.asLowerCase,
-          style: style,
-          semanticsLabel: "${pair.first} ${pair.second}",
+        child: AnimatedSize(
+          duration: Duration(milliseconds: 200),
+          child: MergeSemantics(
+            child: Wrap(
+              children: [
+                Text(
+                  pair.first.toLowerCase(),
+                  style: style.copyWith(
+                    fontWeight: FontWeight.w200,
+                  ),
+                ),
+                Text(
+                  pair.second.toLowerCase(),
+                  style: style.copyWith(
+                    fontWeight: FontWeight.bold,
+                  )
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
